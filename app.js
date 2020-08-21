@@ -8,10 +8,14 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
-
+const session      = require('express-session');
+const passport     = require('passport');
+const cors         = require('cors');
+ 
+require('./configs/passport');
 
 mongoose
-  .connect('mongodb://localhost/supertrips-backend', {useNewUrlParser: true})
+  .connect('mongodb://localhost/supertrips', {useNewUrlParser: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
@@ -44,15 +48,27 @@ app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
+app.use(session({
+  secret:"supertrips supersecret superkey",
+  resave: true,
+  saveUninitialized: true,
+  cookie: { maxAge: 1000 * 60 * 60 * 24 } // User stays in session 24 hours before automatic logout
+}));
 
+app.use(passport.initialize());
+app.use(passport.session());
 
 // default value for title local
-app.locals.title = 'Express - Generated with IronGenerator';
+app.locals.title = 'Supertrips';
 
-
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:3000']
+}));
 
 const index = require('./routes/index');
+const authRoutes = require('./routes/auth-routes');
 app.use('/', index);
-
+app.use('/api', authRoutes);
 
 module.exports = app;
