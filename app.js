@@ -77,7 +77,9 @@ app.use(
 
 const index = require("./routes/index");
 const authRoutes = require("./routes/auth-routes");
+const tripRoutes = require("./routes/trip-routes");
 app.use("/", index);
 app.use("/api", authRoutes);
+app.use("/api", tripRoutes);
 
 module.exports = app;
