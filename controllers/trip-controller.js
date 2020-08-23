@@ -1,10 +1,12 @@
 const express = require("express");
 const passport = require("passport");
-// const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcryptjs")
 const Trip = require("../models/trip-model");
 
 const postNewTrip = (req, res, next) => {
   const title = req.body.title;
+  const author = req.user._id;
+  const isPublic = req.body.isPublic;
 
   if (!title) {
     res.status(400).json({ message: "Provide a title" });
@@ -22,23 +24,22 @@ const postNewTrip = (req, res, next) => {
       return;
     }
 
-    Trip.create({title: title})
-    .then(response => {
-      console.log("Trip created !", response)
-      res.status(200).json(response)
-    })
-    .catch(err => console.log("Error: ", err))
+    Trip.create({ title: title, author: author, isPublic: isPublic })
+      .then((response) => {
+        console.log("Trip created !", response);
+        res.status(200).json(response);
+      })
+      .catch((err) => console.log("Error: ", err));
   });
 };
 
 const getTrips = (req, res, next) => {
-  Trip.find()
-    .then(response => {
-      res.status(200).json(response)
-    })
-}
+  Trip.find().then((response) => {
+    res.status(200).json(response);
+  });
+};
 
 module.exports = {
   postNewTrip,
-  getTrips
+  getTrips,
 };
