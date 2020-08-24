@@ -8,7 +8,7 @@ const tripSchema = new Schema(
       required: [true, "Title is required."]
     },
     author: {
-      type: String
+      type: Schema.Types.ObjectId, ref: 'User'
     },
     isPublic: {
       type: Boolean,
