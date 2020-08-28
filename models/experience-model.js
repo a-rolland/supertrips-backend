@@ -21,4 +21,4 @@ const experienceSchema = new Schema(
 );
 
 const Experience = mongoose.model("Experience", experienceSchema);
-module.exports = Step;
+module.exports = Experience;

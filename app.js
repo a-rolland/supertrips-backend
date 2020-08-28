@@ -79,9 +79,11 @@ const index = require("./routes/index");
 const authRoutes = require("./routes/auth-routes");
 const tripRoutes = require("./routes/trip-routes");
 const stepRoutes = require("./routes/step-routes");
+const experienceRoutes = require("./routes/experience-routes");
 app.use("/", index);
 app.use("/api", authRoutes);
 app.use("/api", tripRoutes);
 app.use("/api", stepRoutes);
+app.use("/api", experienceRoutes);
 
 module.exports = app;
