@@ -13,6 +13,17 @@ const tripSchema = new Schema(
     isPublic: {
       type: Boolean,
       default: false
+    },
+    startDate: {
+      type: String,
+      required: [true, "Start date is required."]
+    },
+    endDate: {
+      type: String,
+      required: [true, "End date is required."]
+    },
+    duration: {
+      type: Number
     }
   },
   {

@@ -7,9 +7,21 @@ const postNewTrip = async (req, res, next) => {
   const title = req.body.title;
   const author = req.user._id;
   const isPublic = req.body.isPublic;
+  const startDate = req.body.startDate;
+  const endDate = req.body.endDate;
+  // Calculate duration : difference between end and start dates
+  const start = new Date(req.body.startDate)
+  const end = new Date(req.body.endDate)
+  const differenceInTime = end - start
+  const duration = differenceInTime / (1000 * 3600 * 24) + 1
 
   if (!title) {
-    res.status(400).json({ message: "Provide a title" });
+    res.status(400).json({ message: "Please provide a title" });
+    return;
+  }
+
+  if (!startDate || !endDate) {
+    res.status(400).json({ message: "Please provide both start date and end date" });
     return;
   }
 
@@ -25,10 +37,13 @@ const postNewTrip = async (req, res, next) => {
     }
 
     try {
-      const newTrip = await Trip.create({
+        const newTrip = await Trip.create({
         title: title,
         author: author,
         isPublic: isPublic,
+        startDate: startDate,
+        endDate: endDate,
+        duration: duration
       });
       console.log("Trip created !", newTrip);
       res.status(200).json(response);
@@ -61,12 +76,20 @@ const getTripDetails = async (req, res, next) => {
 };
 
 const putEditTrip = async (req, res, next) => {
+  const start = new Date(req.body.startDate)
+  const end = new Date(req.body.endDate)
+  const differenceInTime = end - start
+  const duration = differenceInTime / (1000 * 3600 * 24)
+  const editedTrip = {
+    ...req.body,
+    duration: duration+1
+  }
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: 'Specified id is not valid' });
     return;
   }
   try {
-    await Trip.findByIdAndUpdate(req.params.id, req.body)
+    await Trip.findByIdAndUpdate(req.params.id, editedTrip)
     res.json({ message: `Trip with ${req.params.id} is updated successfully.` })
   } catch(error) {
     res.json(error)
