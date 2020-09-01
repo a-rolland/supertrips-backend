@@ -19,7 +19,6 @@ const postNewTrip = async (req, res, next) => {
     res.status(400).json({ message: "Please provide a title" });
     return;
   }
-
   if (!startDate || !endDate) {
     res.status(400).json({ message: "Please provide both start date and end date" });
     return;
@@ -86,6 +85,14 @@ const putEditTrip = async (req, res, next) => {
   }
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: 'Specified id is not valid' });
+    return;
+  }
+  if (!req.body.title) {
+    res.status(400).json({ message: "Please provide a title" });
+    return;
+  }
+  if (!req.body.startDate || !req.body.endDate) {
+    res.status(400).json({ message: "Please provide both start date and end date" });
     return;
   }
   try {

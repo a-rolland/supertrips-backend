@@ -10,7 +10,7 @@ const postNewExperience = async (req, res, next) => {
   const step = req.body.step;
 
   if (!title) {
-    res.status(400).json({ message: "Provide a title" });
+    res.status(400).json({ message: "Please provide a title" });
     return;
   }
 
@@ -75,6 +75,10 @@ const getExperienceDetails = async (req, res, next) => {
 const putEditExperience = async (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: "Specified id is not valid" });
+    return;
+  }
+  if (!req.body.title) {
+    res.status(400).json({ message: "Please provide a title" });
     return;
   }
   try {

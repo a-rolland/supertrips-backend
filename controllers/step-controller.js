@@ -9,7 +9,7 @@ const postNewStep = async (req, res, next) => {
   const trip = req.body.trip;
 
   if (!title) {
-    res.status(400).json({ message: "Provide a title" });
+    res.status(400).json({ message: "Please provide a title" });
     return;
   }
 
@@ -74,6 +74,10 @@ const getStepDetails = async (req, res, next) => {
 const putEditStep = async (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: "Specified id is not valid" });
+    return;
+  }
+  if (!req.body.title) {
+    res.status(400).json({ message: "Please provide a title" });
     return;
   }
   try {
