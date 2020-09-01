@@ -10,7 +10,7 @@ const {
 } = require("../controllers/experience-controller");
 
 router
-  .post("/newexperience", postNewExperience)
+  .post("/newExperience", postNewExperience)
   .get("/experiences/:stepId", getExperiences)
   .get("/experienceDetails/:id", getExperienceDetails)
   .put("/experiences/:id", putEditExperience)

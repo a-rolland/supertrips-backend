@@ -8,7 +8,7 @@ const postSignup = (req, res, next) => {
   const password = req.body.password;
 
   if (!username || !password) {
-    res.status(400).json({ message: "Provide username and password" });
+    res.status(400).json({ message: "Please provide username and password" });
     return;
   }
 
@@ -29,7 +29,7 @@ const postSignup = (req, res, next) => {
     }
 
     if (foundUser) {
-      res.status(400).json({ message: "Username taken. Choose another one." });
+      res.status(400).json({ message: "Username taken. Please choose another one." });
       return;
     }
 

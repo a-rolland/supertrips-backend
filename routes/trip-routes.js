@@ -10,7 +10,7 @@ const {
 } = require("../controllers/trip-controller");
 
 router
-  .post("/newtrip", postNewTrip)
+  .post("/newTrip", postNewTrip)
   .get("/trips", getTrips)
   .get("/trips/:id", getTripDetails)
   .put("/trips/:id", putEditTrip)
