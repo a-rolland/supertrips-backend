@@ -8,7 +8,7 @@ const hbs           = require("hbs");
 const mongoose      = require("mongoose");
 const logger        = require("morgan");
 const path          = require("path");
-const session       = require("express-session");
+// const session       = require("express-session"); // First version
 const passport      = require("passport");
 const cors          = require("cors");
 
@@ -53,14 +53,17 @@ app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 
-app.use(
-  session({
-    secret: "supertrips supersecret superkey",
-    resave: true,
-    saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 }, // User stays in session 24 hours before automatic logout
-  })
-);
+// Session configs - first version
+// app.use(
+//   session({
+//     secret: "supertrips supersecret superkey",
+//     resave: true,
+//     saveUninitialized: true,
+//     cookie: { maxAge: 1000 * 60 * 60 * 24 }, // User stays in session 24 hours before automatic logout
+//   })
+// );
+const session = require('./configs/session')
+session(app)
 
 app.use(passport.initialize());
 app.use(passport.session());
