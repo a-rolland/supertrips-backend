@@ -24,6 +24,18 @@ const postNewTrip = async (req, res, next) => {
     return;
   }
 
+  const newTripObject = {
+    title: title,
+    author: author,
+    isPublic: isPublic,
+    startDate: startDate,
+    endDate: endDate,
+    duration: duration
+  }
+  if (req.file) {
+    newTripObject.imageUrl = req.file.path;
+  }
+
   Trip.findOne({ title }, async (err, foundTitle) => {
     if (err) {
       res.status(500).json({ message: "Title check went bad." });
@@ -36,14 +48,7 @@ const postNewTrip = async (req, res, next) => {
     }
 
     try {
-        const newTrip = await Trip.create({
-        title: title,
-        author: author,
-        isPublic: isPublic,
-        startDate: startDate,
-        endDate: endDate,
-        duration: duration
-      });
+      const newTrip = await Trip.create(newTripObject);
       console.log("Trip created !", newTrip);
       res.status(200).json(response);
     } catch (error) {

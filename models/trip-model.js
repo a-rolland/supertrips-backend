@@ -24,6 +24,10 @@ const tripSchema = new Schema(
     },
     duration: {
       type: Number
+    },
+    imageUrl: { 
+      type: String,
+      default: "https://c.pxhere.com/images/89/1a/4898ca5cd276d6fafc07f7abd76a-1444769.jpg!d"
     }
   },
   {

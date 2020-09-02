@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const fileUploader = require("../configs/cloudinary");
 
 const {
   postNewTrip,
@@ -10,10 +11,10 @@ const {
 } = require("../controllers/trip-controller");
 
 router
-  .post("/newTrip", postNewTrip)
+  .post("/newTrip", fileUploader.single("imageUrl"), postNewTrip)
   .get("/trips", getTrips)
   .get("/trips/:id", getTripDetails)
-  .put("/trips/:id", putEditTrip)
+  .put("/trips/:id", fileUploader.single("imageUrl"), putEditTrip)
   .delete("/trips/:id", deleteTrip)
 
 module.exports = router;

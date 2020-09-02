@@ -13,6 +13,7 @@ const passport      = require("passport");
 const cors          = require("cors");
 
 require("./configs/passport");
+require("./configs/cloudinary");
 
 mongoose
   .connect("mongodb://localhost/supertrips", { useNewUrlParser: true })
