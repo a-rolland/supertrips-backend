@@ -37,11 +37,16 @@ const postNewExperience = async (req, res, next) => {
   //    res.json(error);
   //   }
   // });
+  const newExperienceObject = {
+    title: title,
+    step: step
+  }
+  if (req.body.description) {
+    newExperienceObject.description = req.body.description;
+  }
+
   try {
-    const newExperience = await Experience.create({
-      title: title,
-      step: step,
-    });
+    const newExperience = await Experience.create(newExperienceObject);
     console.log("Experience created !", newExperience);
     res.status(200).json(response);
   } catch (error) {

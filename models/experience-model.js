@@ -9,6 +9,9 @@ const experienceSchema = new Schema(
     },
     step: {
       type: Schema.Types.ObjectId, ref: 'Step'
+    },
+    description: {
+      type: String
     }
     // Description
     // Fecha
