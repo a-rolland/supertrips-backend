@@ -81,6 +81,10 @@ const getExperienceDetails = async (req, res, next) => {
 };
 
 const putEditExperience = async (req, res, next) => {
+  const editedExperience = (req.body)
+  if (req.body.place) {
+    editedExperience.place = req.body.place
+  }
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: "Specified id is not valid" });
     return;
@@ -90,7 +94,7 @@ const putEditExperience = async (req, res, next) => {
     return;
   }
   try {
-    await Experience.findByIdAndUpdate(req.params.id, req.body);
+    await Experience.findByIdAndUpdate(req.params.id, editedExperience);
     res.json({
       message: `Experience with ${req.params.id} is updated successfully.`,
     });
