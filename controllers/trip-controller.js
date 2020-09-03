@@ -88,6 +88,9 @@ const putEditTrip = async (req, res, next) => {
     ...req.body,
     duration: duration+1
   }
+  if (req.file) {
+    editedTrip.imageUrl = req.file.path
+  }
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: 'Specified id is not valid' });
     return;
