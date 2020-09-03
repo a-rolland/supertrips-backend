@@ -12,10 +12,19 @@ const experienceSchema = new Schema(
     },
     description: {
       type: String
+    },
+    place: {
+      address: {
+        type: String
+      },
+      lat: {
+        type: Number
+      },
+      lng: {
+        type: Number
+      }
     }
-    // Description
     // Fecha
-    // Lat Long Optional
     // Pictures Optional
   },
   {

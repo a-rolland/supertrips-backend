@@ -44,6 +44,9 @@ const postNewExperience = async (req, res, next) => {
   if (req.body.description) {
     newExperienceObject.description = req.body.description;
   }
+  if (req.body.place) {
+    newExperienceObject.place = req.body.place
+  }
 
   try {
     const newExperience = await Experience.create(newExperienceObject);
