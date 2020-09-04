@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
+const mongoose = require('mongoose');
 const User = require("../models/user-model");
 
 const postSignup = (req, res, next) => {
@@ -109,9 +110,27 @@ const getLoggedIn = (req, res, next) => {
   res.status(403).json({ message: "Unauthorized" });
 };
 
+const putEditProfilePicture = async (req, res, next) => {
+  let profilePicture = req.body.profilePicture
+  if (req.file) {
+    profilePicture = req.file.path
+  }
+  if (!mongoose.Types.ObjectId.isValid(req.user.id)) {
+    res.status(400).json({ message: 'Specified id is not valid' });
+    return;
+  }
+  try {
+    await User.findByIdAndUpdate(req.user._id, { profilePicture: profilePicture })
+    res.json({ message: `User with ${req.user._id} is updated successfully.` })
+  } catch(error) {
+    res.json(error)
+  }
+}
+
 module.exports = {
   postSignup,
   postLogin,
   postLogout,
   getLoggedIn,
+  putEditProfilePicture
 };

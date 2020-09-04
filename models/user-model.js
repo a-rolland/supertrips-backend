@@ -3,8 +3,18 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
-    username: String,
-    password: String,
+    username: {
+      type: String,
+      required: [true, "Username is required."]
+    },
+    password: {
+      type: String,
+      required: [true, "Password is required."]
+    },
+    profilePicture: {
+      type: String,
+      default: "https://res.cloudinary.com/nutriapp/image/upload/v1599217287/profileDefault_jr9j16.png"
+    }
   },
   {
     timestamps: true,

@@ -27,7 +27,7 @@ const tripSchema = new Schema(
     },
     imageUrl: { 
       type: String,
-      default: "https://c.pxhere.com/images/89/1a/4898ca5cd276d6fafc07f7abd76a-1444769.jpg!d"
+      default: "https://res.cloudinary.com/nutriapp/image/upload/v1599217458/tripDefault_gkayed.jpg"
     }
   },
   {
