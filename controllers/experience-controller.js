@@ -8,9 +8,16 @@ const Experience = require("../models/experience-model");
 const postNewExperience = async (req, res, next) => {
   const title = req.body.title;
   const step = req.body.step;
+  const date = req.body.date;
+  const time = req.body.time;
+  const showDateTime = req.body.showDateTime;
 
   if (!title) {
     res.status(400).json({ message: "Please provide a title" });
+    return;
+  }
+  if (!date || !time) {
+    res.status(400).json({ message: "Please provide a date and a time, so we can show your experiences in the correct order" });
     return;
   }
 
@@ -39,7 +46,10 @@ const postNewExperience = async (req, res, next) => {
   // });
   const newExperienceObject = {
     title: title,
-    step: step
+    step: step,
+    date: date,
+    time: time,
+    showDateTime: showDateTime
   }
   if (req.body.description) {
     newExperienceObject.description = req.body.description;
@@ -91,6 +101,10 @@ const putEditExperience = async (req, res, next) => {
   }
   if (!req.body.title) {
     res.status(400).json({ message: "Please provide a title" });
+    return;
+  }
+  if (!req.body.date || !req.body.time) {
+    res.status(400).json({ message: "Please provide a date and a time, so we can show your experiences in the correct order" });
     return;
   }
   try {

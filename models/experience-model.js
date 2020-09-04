@@ -23,8 +23,19 @@ const experienceSchema = new Schema(
       lng: {
         type: Number
       }
+    },
+    date: {
+      type: String,
+      required: [true, "Date is required."]
+    },
+    time: {
+      type: String,
+      required: [true, "Time is required"]
+    },
+    showDateTime: {
+      type: Boolean,
+      default: false
     }
-    // Fecha
     // Pictures Optional
   },
   {
