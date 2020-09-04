@@ -17,7 +17,12 @@ const postNewExperience = async (req, res, next) => {
     return;
   }
   if (!date || !time) {
-    res.status(400).json({ message: "Please provide a date and a time, so we can show your experiences in the correct order" });
+    res
+      .status(400)
+      .json({
+        message:
+          "Please provide a date and a time, so we can show your experiences in the correct order",
+      });
     return;
   }
 
@@ -49,13 +54,13 @@ const postNewExperience = async (req, res, next) => {
     step: step,
     date: date,
     time: time,
-    showDateTime: showDateTime
-  }
+    showDateTime: showDateTime,
+  };
   if (req.body.description) {
     newExperienceObject.description = req.body.description;
   }
   if (req.body.place) {
-    newExperienceObject.place = req.body.place
+    newExperienceObject.place = req.body.place;
   }
 
   try {
@@ -68,9 +73,11 @@ const postNewExperience = async (req, res, next) => {
 };
 
 const getExperiences = async (req, res, next) => {
-  const step = req.params.stepId
+  const step = req.params.stepId;
   try {
-    const experiences = await Experience.find({step: req.params.stepId});
+    const experiences = await Experience.find({ step: req.params.stepId })
+      .sort({ date: "asc" })
+      .sort({ time: "asc" });
     res.status(200).json(experiences);
   } catch (error) {
     res.json(error);
@@ -83,7 +90,9 @@ const getExperienceDetails = async (req, res, next) => {
     return;
   }
   try {
-    const experience = await Experience.findById(req.params.id).populate("step");
+    const experience = await Experience.findById(req.params.id).populate(
+      "step"
+    );
     res.status(200).json(experience);
   } catch (error) {
     res.json(error);
@@ -91,9 +100,9 @@ const getExperienceDetails = async (req, res, next) => {
 };
 
 const putEditExperience = async (req, res, next) => {
-  const editedExperience = (req.body)
+  const editedExperience = req.body;
   if (req.body.place) {
-    editedExperience.place = req.body.place
+    editedExperience.place = req.body.place;
   }
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: "Specified id is not valid" });
@@ -104,7 +113,12 @@ const putEditExperience = async (req, res, next) => {
     return;
   }
   if (!req.body.date || !req.body.time) {
-    res.status(400).json({ message: "Please provide a date and a time, so we can show your experiences in the correct order" });
+    res
+      .status(400)
+      .json({
+        message:
+          "Please provide a date and a time, so we can show your experiences in the correct order",
+      });
     return;
   }
   try {
