@@ -51,7 +51,7 @@ const postNewStep = async (req, res, next) => {
 const getSteps = async (req, res, next) => {
   const trip = req.params.id
   try {
-    const steps = await Step.find({trip: req.params.id});
+    const steps = await Step.find({trip: req.params.id}).populate('trip');
     res.status(200).json(steps);
   } catch (error) {
     res.json(error);

@@ -2,6 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const mongoose = require('mongoose');
 const Trip = require("../models/trip-model");
+const User = require("../models/user-model");
 
 const postNewTrip = async (req, res, next) => {
   const title = req.body.title;
@@ -59,7 +60,7 @@ const postNewTrip = async (req, res, next) => {
 
 const getTrips = async (req, res, next) => {
   try {
-    const trips = await Trip.find();
+    const trips = await Trip.find().populate('author');
     res.status(200).json(trips);
   } catch (error) {
     res.json(error);

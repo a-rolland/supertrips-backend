@@ -76,6 +76,7 @@ const getExperiences = async (req, res, next) => {
   const step = req.params.stepId;
   try {
     const experiences = await Experience.find({ step: req.params.stepId })
+      .populate('step')
       .sort({ date: "asc" })
       .sort({ time: "asc" });
     res.status(200).json(experiences);
@@ -90,9 +91,7 @@ const getExperienceDetails = async (req, res, next) => {
     return;
   }
   try {
-    const experience = await Experience.findById(req.params.id).populate(
-      "step"
-    );
+    const experience = await Experience.findById(req.params.id).populate('step');
     res.status(200).json(experience);
   } catch (error) {
     res.json(error);
