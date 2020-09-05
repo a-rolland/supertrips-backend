@@ -10,7 +10,8 @@ const postNewExperience = async (req, res, next) => {
   const step = req.body.step;
   const date = req.body.date;
   const time = req.body.time;
-  const showDateTime = req.body.showDateTime;
+  const showDate = req.body.showDate;
+  const showTime = req.body.showTime;
 
   if (!title) {
     res.status(400).json({ message: "Please provide a title" });
@@ -54,7 +55,8 @@ const postNewExperience = async (req, res, next) => {
     step: step,
     date: date,
     time: time,
-    showDateTime: showDateTime,
+    showDate: showDate,
+    showTime: showTime
   };
   if (req.body.description) {
     newExperienceObject.description = req.body.description;

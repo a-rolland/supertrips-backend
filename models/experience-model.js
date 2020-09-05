@@ -32,7 +32,11 @@ const experienceSchema = new Schema(
       type: String,
       required: [true, "Time is required"]
     },
-    showDateTime: {
+    showDate: {
+      type: Boolean,
+      default: false
+    },
+    showTime: {
       type: Boolean,
       default: false
     }
