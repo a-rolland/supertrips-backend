@@ -14,17 +14,7 @@ const cors          = require("cors");
 
 require("./configs/passport");
 require("./configs/cloudinary");
-
-mongoose
-  .connect("mongodb://localhost/supertrips", { useNewUrlParser: true })
-  .then((x) => {
-    console.log(
-      `Connected to Mongo! Database name: "${x.connections[0].name}"`
-    );
-  })
-  .catch((err) => {
-    console.error("Error connecting to mongo", err);
-  });
+require("./configs/db");
 
 const app_name = require("./package.json").name;
 const debug = require("debug")(
