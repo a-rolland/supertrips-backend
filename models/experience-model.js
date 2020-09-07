@@ -39,8 +39,10 @@ const experienceSchema = new Schema(
     showTime: {
       type: Boolean,
       default: false
+    },
+    pictures: {
+      type: [String]
     }
-    // Pictures Optional
   },
   {
     timestamps: true,

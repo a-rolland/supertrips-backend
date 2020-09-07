@@ -147,10 +147,32 @@ const deleteExperience = async (req, res, next) => {
   }
 };
 
+const putNewPicture = async (req, res, next) => {
+  if (!req.file) {
+    res.status(400).json({ message: "Please provide a file." });
+    return;
+  }
+  const newPicture = req.file.path;
+
+  try {
+    await Experience.findByIdAndUpdate(
+      req.params.id,
+      {$push: {'pictures': newPicture}},
+      {safe: true, upsert: true, new : true}
+    );
+    res.json({
+      message: `Experience with ${req.params.id} is updated successfully. A new picture has been added.`,
+    });
+  } catch (error) {
+    res.json(error);
+  }
+};
+
 module.exports = {
   postNewExperience,
   getExperiences,
   getExperienceDetails,
   putEditExperience,
   deleteExperience,
+  putNewPicture
 };
