@@ -90,6 +90,19 @@ const getExperiences = async (req, res, next) => {
   }
 };
 
+const getFullTripExperiences = async (req, res, next) => {
+  const trip = req.params.id
+  console.log(trip)
+  try {
+    const allExperiences = await Experience.find({ trip: trip })
+      .populate('step')
+      .populate('trip');
+    res.status(200).json(allExperiences);
+  } catch (error) {
+    res.json(error);
+  }
+};
+
 const getExperienceDetails = async (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: "Specified id is not valid" });
@@ -174,6 +187,7 @@ const putNewPicture = async (req, res, next) => {
 module.exports = {
   postNewExperience,
   getExperiences,
+  getFullTripExperiences,
   getExperienceDetails,
   putEditExperience,
   deleteExperience,

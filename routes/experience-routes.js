@@ -5,6 +5,7 @@ const fileUploader = require("../configs/cloudinary");
 const {
   postNewExperience,
   getExperiences,
+  getFullTripExperiences,
   getExperienceDetails,
   putEditExperience,
   deleteExperience,
@@ -14,6 +15,7 @@ const {
 router
   .post("/newExperience", postNewExperience)
   .get("/experiences/:stepId", getExperiences)
+  .get("/experiences/trip/:id", getFullTripExperiences)
   .get("/experienceDetails/:id", getExperienceDetails)
   .put("/experiences/:id", putEditExperience)
   .delete("/experiences/:id", deleteExperience)
