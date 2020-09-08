@@ -8,6 +8,7 @@ const Experience = require("../models/experience-model");
 const postNewExperience = async (req, res, next) => {
   const title = req.body.title;
   const step = req.body.step;
+  const trip = req.body.trip;
   const date = req.body.date;
   const time = req.body.time;
   const showDate = req.body.showDate;
@@ -53,6 +54,7 @@ const postNewExperience = async (req, res, next) => {
   const newExperienceObject = {
     title: title,
     step: step,
+    trip: trip,
     date: date,
     time: time,
     showDate: showDate,
@@ -79,6 +81,7 @@ const getExperiences = async (req, res, next) => {
   try {
     const experiences = await Experience.find({ step: req.params.stepId })
       .populate('step')
+      .populate('trip')
       .sort({ date: "asc" })
       .sort({ time: "asc" });
     res.status(200).json(experiences);
@@ -93,7 +96,7 @@ const getExperienceDetails = async (req, res, next) => {
     return;
   }
   try {
-    const experience = await Experience.findById(req.params.id).populate('step');
+    const experience = await Experience.findById(req.params.id).populate('step').populate('trip');
     res.status(200).json(experience);
   } catch (error) {
     res.json(error);

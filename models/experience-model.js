@@ -10,6 +10,9 @@ const experienceSchema = new Schema(
     step: {
       type: Schema.Types.ObjectId, ref: 'Step'
     },
+    trip: {
+      type: Schema.Types.ObjectId, ref: 'Trip'
+    },
     description: {
       type: String
     },
