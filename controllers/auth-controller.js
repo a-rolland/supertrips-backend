@@ -127,10 +127,46 @@ const putEditProfilePicture = async (req, res, next) => {
   }
 }
 
+const toggleAddToFavorites = async (req, res, next) => {
+  const trip = req.params.id
+  console.log(trip)
+
+  if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
+    res.status(400).json({ message: 'Specified id is not valid' });
+    return;
+  }
+  
+  const thisUser = await User.findById(req.user._id)
+  if (thisUser.favorites.indexOf(trip) === -1) {
+    try {
+      await User.findByIdAndUpdate(
+        req.user._id,
+        {$push: {'favorites': trip}},
+        {safe: true, upsert: true, new : true}
+      )
+      res.json({ message: `User with ${req.user._id} is updated successfully: trip added to favorites!` })
+    } catch(error) {
+      res.json(error)
+    }
+  } else {
+    try {
+      await User.findByIdAndUpdate(
+        req.user._id,
+        {$pull: {'favorites': trip}},
+        {safe: true, upsert: true, new : true}
+      )
+      res.json({ message: `User with ${req.user._id} is updated successfully: trip removed from favorites!` })
+    } catch(error) {
+      res.json(error)
+    }
+  }
+}
+
 module.exports = {
   postSignup,
   postLogin,
   postLogout,
   getLoggedIn,
-  putEditProfilePicture
+  putEditProfilePicture,
+  toggleAddToFavorites
 };

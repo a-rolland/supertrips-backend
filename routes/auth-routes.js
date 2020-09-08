@@ -7,7 +7,8 @@ const {
   postLogin,
   postLogout,
   getLoggedIn,
-  putEditProfilePicture
+  putEditProfilePicture,
+  toggleAddToFavorites
 } = require("../controllers/auth-controller");
 
 router
@@ -16,5 +17,6 @@ router
   .post("/logout", postLogout)
   .get("/loggedIn", getLoggedIn)
   .put("/profile/profilePicture", fileUploader.single("profilePicture"), putEditProfilePicture)
+  .put("/toggleAddToFavorites/:id", toggleAddToFavorites)
 
 module.exports = router;
