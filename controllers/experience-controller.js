@@ -170,11 +170,10 @@ const putNewPicture = async (req, res, next) => {
     return;
   }
   const newPicture = req.file.path;
-
   try {
     await Experience.findByIdAndUpdate(
       req.params.id,
-      {$push: {'pictures': newPicture}},
+      {$push: {'pictures': { url: newPicture }}},
       {safe: true, upsert: true, new : true}
     );
     res.json({
@@ -185,6 +184,29 @@ const putNewPicture = async (req, res, next) => {
   }
 };
 
+const deleteExperiencePicture = async (req, res, next) => {
+  const experience = req.params.id
+  const experiencePictureId = req.params.imageId
+  console.log(experience)
+  console.log(experiencePictureId)
+
+  if (!mongoose.Types.ObjectId.isValid(experience)) {
+    res.status(400).json({ message: 'Specified id is not valid' });
+    return;
+  }
+
+  try {
+    await Experience.findByIdAndUpdate(
+      experience,
+      {$pull: {'pictures': {_id: experiencePictureId}}},
+      {safe: true, upsert: true, new : true}
+    )
+    res.json({ message: `User with ${req.user._id} is updated successfully: trip removed from favorites!` })
+  } catch(error) {
+    res.json(error)
+  }
+}
+
 module.exports = {
   postNewExperience,
   getExperiences,
@@ -192,5 +214,6 @@ module.exports = {
   getExperienceDetails,
   putEditExperience,
   deleteExperience,
-  putNewPicture
+  putNewPicture,
+  deleteExperiencePicture
 };

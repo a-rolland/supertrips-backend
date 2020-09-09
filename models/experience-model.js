@@ -43,9 +43,11 @@ const experienceSchema = new Schema(
       type: Boolean,
       default: false
     },
-    pictures: {
-      type: [String]
-    }
+    pictures: [
+      {
+        url: String
+      }
+    ]
   },
   {
     timestamps: true,
