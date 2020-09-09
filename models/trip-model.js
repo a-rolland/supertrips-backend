@@ -28,6 +28,9 @@ const tripSchema = new Schema(
     imageUrl: { 
       type: String,
       default: "https://res.cloudinary.com/nutriapp/image/upload/v1599217458/tripDefault_gkayed.jpg"
+    },
+    likes: { 
+      type: [Schema.Types.ObjectId]
     }
   },
   {

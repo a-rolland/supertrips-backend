@@ -153,10 +153,46 @@ const deleteTrip = async (req, res, next) => {
   }
 }
 
+const toggleLikes = async (req, res, next) => {
+  const trip = req.params.id
+  const userId = req.user._id
+
+  if (!mongoose.Types.ObjectId.isValid(trip)) {
+    res.status(400).json({ message: 'Specified id is not valid' });
+    return;
+  }
+  
+  const thisTrip = await Trip.findById(trip)
+  if (thisTrip.likes.indexOf(userId) === -1) {
+    try {
+      await Trip.findByIdAndUpdate(
+        trip,
+        {$push: {'likes': userId}},
+        {safe: true, upsert: true, new : true}
+      )
+      res.json({ message: `Trip with ${trip} is updated successfully: new "Like"!` })
+    } catch(error) {
+      res.json(error)
+    }
+  } else {
+    try {
+      await Trip.findByIdAndUpdate(
+        trip,
+        {$pull: {'likes': userId}},
+        {safe: true, upsert: true, new : true}
+      )
+      res.json({ message: `Trip with ${trip} is updated successfully: one "Like" less!` })
+    } catch(error) {
+      res.json(error)
+    }
+  }
+}
+
 module.exports = {
   postNewTrip,
   getTrips,
   getTripDetails,
   putEditTrip,
-  deleteTrip
+  deleteTrip,
+  toggleLikes
 };
