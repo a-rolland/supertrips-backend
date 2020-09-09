@@ -2,6 +2,8 @@ const express = require("express");
 const passport = require("passport");
 const mongoose = require('mongoose');
 const Trip = require("../models/trip-model");
+const Step = require("../models/step-model");
+const Experience = require("../models/experience-model");
 const User = require("../models/user-model");
 
 const postNewTrip = async (req, res, next) => {
@@ -119,7 +121,19 @@ const deleteTrip = async (req, res, next) => {
   }
   try {
     await Trip.findByIdAndRemove(req.params.id)
-    res.json({ message: `Trip with ${req.params.id} is removed successfully.` })
+    try {
+      await Step.deleteMany({trip: req.params.id})
+      try {
+        await Experience.deleteMany({trip: req.params.id})
+        res.json({ message: `Trip with ${req.params.id} is removed successfully.
+        Experience(s) from Trip ${req.params.id} were removed successfully.
+        Step(s) from Trip ${req.params.id} were removed successfully.` })
+      } catch(error) {
+        res.json(error)
+      }
+    } catch(error) {
+      res.json(error)
+    }
   } catch(error) {
     res.json(error)
   }
