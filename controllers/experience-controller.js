@@ -28,29 +28,6 @@ const postNewExperience = async (req, res, next) => {
     return;
   }
 
-  // FOR LATER : Check if same author and same title already exists
-  // Trip.findOne({ title }, async (err, foundTitle) => {
-  //   if (err) {
-  //     res.status(500).json({ message: "Title check went bad." });
-  //     return;
-  //   }
-
-  //   if (foundTitle) {
-  //     res.status(400).json({ message: "Title taken. Choose another one." });
-  //     return;
-  //   }
-
-  //   try {
-  //   const newStep = await Step.create({
-  //     title: title,
-  //     trip: trip
-  //   });
-  //   console.log("Step created !", newStep);
-  //   res.status(200).json(response);
-  //   } catch (error) {
-  //    res.json(error);
-  //   }
-  // });
   const newExperienceObject = {
     title: title,
     step: step,
@@ -67,13 +44,25 @@ const postNewExperience = async (req, res, next) => {
     newExperienceObject.place = req.body.place;
   }
 
-  try {
-    const newExperience = await Experience.create(newExperienceObject);
-    console.log("Experience created !", newExperience);
-    res.status(200).json(response);
-  } catch (error) {
-    res.json(error);
-  }
+  Experience.findOne({ title, step }, async (err, foundExperienceTitle) => {
+    if (err) {
+      res.status(500).json({ message: "Title check went bad." });
+      return;
+    }
+
+    if (foundExperienceTitle) {
+      res.status(400).json({ message: "This step already has an experience with this name. Please choose another one." });
+      return;
+    }
+
+    try {
+      const newExperience = await Experience.create(newExperienceObject);
+      console.log("Experience created !", newExperience);
+      res.status(200).json(response);
+    } catch (error) {
+      res.json(error);
+    }
+  });
 };
 
 const getExperiences = async (req, res, next) => {
@@ -137,14 +126,27 @@ const putEditExperience = async (req, res, next) => {
       });
     return;
   }
-  try {
-    await Experience.findByIdAndUpdate(req.params.id, editedExperience);
-    res.json({
-      message: `Experience with ${req.params.id} is updated successfully.`,
-    });
-  } catch (error) {
-    res.json(error);
-  }
+
+  Experience.findOne({ "title": req.body.title, "step": req.body.step, "_id": { $ne: req.params.id }}, async (err, foundExperienceTitle) => {
+    if (err) {
+      res.status(500).json({ message: "Title check went bad." });
+      return;
+    }
+
+    if (foundExperienceTitle) {
+      res.status(400).json({ message: "This step already has an experience with this name. Please choose another one." });
+      return;
+    }
+
+    try {
+      await Experience.findByIdAndUpdate(req.params.id, editedExperience);
+      res.json({
+        message: `Experience with ${req.params.id} is updated successfully.`,
+      });
+    } catch (error) {
+      res.json(error);
+    }
+  });
 };
 
 const deleteExperience = async (req, res, next) => {

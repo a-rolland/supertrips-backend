@@ -47,7 +47,7 @@ const postNewTrip = async (req, res, next) => {
     }
 
     if (foundTitle) {
-      res.status(400).json({ message: "Title taken. Choose another one." });
+      res.status(400).json({ message: "You already created a trip with the same name. Please choose another one." });
       return;
     }
 
@@ -108,14 +108,14 @@ const putEditTrip = async (req, res, next) => {
     return;
   }
 
-  Trip.findOne({ "title": req.body.title, "author": req.user._id }, async (err, foundTitle) => {
+  Trip.findOne({ "title": req.body.title, "author": req.user._id, "_id": { $ne: req.params.id }}, async (err, foundTitle) => {
     if (err) {
       res.status(500).json({ message: "Title check went bad." });
       return;
     }
 
     if (foundTitle) {
-      res.status(400).json({ message: "Title taken. Choose another one." });
+      res.status(400).json({ message: "You already created a trip with the same name. Please choose another one." });
       return;
     }
 
