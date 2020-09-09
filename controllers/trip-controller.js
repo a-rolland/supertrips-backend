@@ -39,7 +39,8 @@ const postNewTrip = async (req, res, next) => {
     newTripObject.imageUrl = req.file.path;
   }
 
-  Trip.findOne({ title }, async (err, foundTitle) => {
+  // One author cannot create two trips with the same name, but two different authors can
+  Trip.findOne({ title, author }, async (err, foundTitle) => {
     if (err) {
       res.status(500).json({ message: "Title check went bad." });
       return;
@@ -106,12 +107,25 @@ const putEditTrip = async (req, res, next) => {
     res.status(400).json({ message: "Please provide both start date and end date" });
     return;
   }
-  try {
-    await Trip.findByIdAndUpdate(req.params.id, editedTrip)
-    res.json({ message: `Trip with ${req.params.id} is updated successfully.` })
-  } catch(error) {
-    res.json(error)
-  }
+
+  Trip.findOne({ "title": req.body.title, "author": req.user._id }, async (err, foundTitle) => {
+    if (err) {
+      res.status(500).json({ message: "Title check went bad." });
+      return;
+    }
+
+    if (foundTitle) {
+      res.status(400).json({ message: "Title taken. Choose another one." });
+      return;
+    }
+
+    try {
+      await Trip.findByIdAndUpdate(req.params.id, editedTrip)
+      res.json({ message: `Trip with ${req.params.id} is updated successfully.` })
+    } catch(error) {
+      res.json(error)
+    }
+  });
 }
 
 const deleteTrip = async (req, res, next) => {

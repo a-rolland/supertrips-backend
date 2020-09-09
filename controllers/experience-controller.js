@@ -92,7 +92,6 @@ const getExperiences = async (req, res, next) => {
 
 const getFullTripExperiences = async (req, res, next) => {
   const trip = req.params.id
-  console.log(trip)
   try {
     const allExperiences = await Experience.find({ trip: trip })
       .populate('step')
