@@ -5,11 +5,11 @@ const userSchema = new Schema(
   {
     username: {
       type: String,
-      required: [true, "Username is required."]
+      // required: [true, "Username is required."]
     },
     password: {
       type: String,
-      required: [true, "Password is required."]
+      // required: [true, "Password is required."]
     },
     profilePicture: {
       type: String,
@@ -18,6 +18,12 @@ const userSchema = new Schema(
     favorites: {
       type: [Schema.Types.ObjectId],
       ref: 'Trip'
+    },
+    facebook: {
+      id: String,
+      token: String,
+      email: String,
+      name: String
     }
   },
   {
