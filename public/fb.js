@@ -1,6 +1,6 @@
 window.fbAsyncInit = function() {
   FB.init({
-    appId      : document.currentScript.getAttribute('fbKey'),
+    appId      : "651873985443420",
     xfbml      : true,
     version    : 'v8.0'
   });
