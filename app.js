@@ -80,4 +80,9 @@ app.use("/api", tripRoutes);
 app.use("/api", stepRoutes);
 app.use("/api", experienceRoutes);
 
+app.use((req, res, next) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/public/index.html");
+});
+
 module.exports = app;
