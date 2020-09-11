@@ -60,7 +60,6 @@ passport.use('facebookToken', new FacebookTokenStrategy({
           profilePicture: profile.photos[0].value,
           facebook: {
             id: profile.id,
-            token: accessToken,
             email: profile.emails[0].value,
             name: profile.name.givenName
           }
