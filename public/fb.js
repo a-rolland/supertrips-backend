@@ -1,6 +1,6 @@
 window.fbAsyncInit = function() {
   FB.init({
-    appId      : `${process.env.FACEBOOK_APP_ID}`,
+    appId      : "%REACT_APP_FACEBOOK_APP_ID%",
     xfbml      : true,
     version    : 'v8.0'
   });
