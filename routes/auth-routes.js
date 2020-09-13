@@ -4,6 +4,7 @@ const fileUploader = require("../configs/cloudinary");
 const passport = require("passport")
 
 const {
+  getOneUser,
   postSignup,
   postLogin,
   postLogout,
@@ -14,6 +15,7 @@ const {
 } = require("../controllers/auth-controller");
 
 router
+  .get("/getUser/:userId", getOneUser)
   .post("/signup", postSignup)
   .post("/login", postLogin)
   .post("/logout", postLogout)

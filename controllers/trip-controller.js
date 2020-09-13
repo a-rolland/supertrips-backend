@@ -86,7 +86,7 @@ const getPopularTrips = async (req, res, next) => {
               "length": { $cond: { if: { $isArray: "$likes" }, then: { $size: "$likes" }, else: "NA"} }
           }},
           { "$sort": { "length": -1 } },
-          { "$limit": 3 }
+          { "$limit": 5 }
       ]
   )
   await Trip.populate(trips, {path: "author"});

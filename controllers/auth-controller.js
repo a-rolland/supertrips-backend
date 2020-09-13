@@ -4,6 +4,16 @@ const bcrypt = require("bcryptjs");
 const mongoose = require('mongoose');
 const User = require("../models/user-model");
 
+const getOneUser = async (req, res, next) => {
+  try {
+    const foundUser = await User.findById(req.params.userId)
+    console.log(foundUser)
+    res.status(200).json(foundUser)
+  } catch(error) {
+    res.status(400).json(error)
+  }
+}
+
 const postSignup = (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -188,6 +198,7 @@ const toggleAddToFavorites = async (req, res, next) => {
 }
 
 module.exports = {
+  getOneUser,
   postSignup,
   postLogin,
   postLogout,
