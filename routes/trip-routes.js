@@ -5,6 +5,7 @@ const fileUploader = require("../configs/cloudinary");
 const {
   postNewTrip,
   getTrips,
+  getPopularTrips,
   getTripDetails,
   putEditTrip,
   deleteTrip,
@@ -14,6 +15,7 @@ const {
 router
   .post("/newTrip", fileUploader.single("imageUrl"), postNewTrip)
   .get("/trips", getTrips)
+  .get("/popularTrips", getPopularTrips)
   .get("/trips/:id", getTripDetails)
   .put("/trips/:id", fileUploader.single("imageUrl"), putEditTrip)
   .delete("/trips/:id", deleteTrip)

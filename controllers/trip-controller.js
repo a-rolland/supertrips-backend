@@ -70,6 +70,33 @@ const getTrips = async (req, res, next) => {
   }
 };
 
+const getPopularTrips = async (req, res, next) => {
+  try {
+    const trips = await Trip.aggregate(
+      [
+          { "$project": {
+              "title": 1,
+              "author": 1,
+              "isPublic": 1,
+              "startDate": 1,
+              "endDate": 1,
+              "duration": 1,
+              "imageUrl": 1,
+              "likes": 1,
+              "length": { $cond: { if: { $isArray: "$likes" }, then: { $size: "$likes" }, else: "NA"} }
+          }},
+          { "$sort": { "length": -1 } },
+          { "$limit": 3 }
+      ]
+  )
+  await Trip.populate(trips, {path: "author"});
+    res.status(200).json(trips);
+  } catch (error) {
+    console.log(error)
+    res.json(error);
+  }
+};
+
 const getTripDetails = async (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: "Specified id is not valid" });
@@ -191,6 +218,7 @@ const toggleLikes = async (req, res, next) => {
 module.exports = {
   postNewTrip,
   getTrips,
+  getPopularTrips,
   getTripDetails,
   putEditTrip,
   deleteTrip,
