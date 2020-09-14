@@ -22,7 +22,10 @@ const userSchema = new Schema(
     facebook: {
       id: String,
       email: String,
-      name: String
+      name: {
+        firstName: String,
+        lastName: String
+      }
     }
   },
   {

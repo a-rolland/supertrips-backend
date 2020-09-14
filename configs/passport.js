@@ -56,12 +56,15 @@ passport.use('facebookToken', new FacebookTokenStrategy({
         }
 
         const newUser = new User({
-          username: profile._json.name,
+          username: `${profile.name.givenName} ${profile.name.familyName[0]}`,
           profilePicture: profile.photos[0].value,
           facebook: {
             id: profile.id,
             email: profile.emails[0].value,
-            name: profile.name.givenName
+            name: {
+              firstName: profile.name.givenName,
+              lastName: profile.name.familyName
+            }
           }
         })
 
