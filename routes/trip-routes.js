@@ -9,7 +9,8 @@ const {
   getTripDetails,
   putEditTrip,
   deleteTrip,
-  toggleLikes
+  toggleLikes,
+  postComment
 } = require("../controllers/trip-controller");
 
 router
@@ -20,5 +21,6 @@ router
   .put("/trips/:id", fileUploader.single("imageUrl"), putEditTrip)
   .delete("/trips/:id", deleteTrip)
   .put("/trip/toggleLikes/:id", toggleLikes)
+  .post("/trip/postComment/:id", postComment)
 
 module.exports = router;

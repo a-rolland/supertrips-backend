@@ -31,7 +31,16 @@ const tripSchema = new Schema(
     },
     likes: { 
       type: [Schema.Types.ObjectId]
-    }
+    },
+    comments: [
+      {
+        commentAuthor: {
+          username: String,
+          profilePicture: String
+        },
+        comment: String
+      }
+    ]
   },
   {
     timestamps: true,
