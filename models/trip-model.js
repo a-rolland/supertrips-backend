@@ -35,6 +35,7 @@ const tripSchema = new Schema(
     comments: [
       {
         commentAuthor: {
+          _id: Schema.Types.ObjectId,
           username: String,
           profilePicture: String
         },

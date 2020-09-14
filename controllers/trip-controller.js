@@ -217,11 +217,8 @@ const toggleLikes = async (req, res, next) => {
 
 const postComment = async (req, res, next) => {
   const userCommenting = req.user
-  console.log("USER", userCommenting)
   const commentLeft = req.body.comment
-  console.log("Comment", commentLeft)
   const trip = req.params.id
-  console.log("Trip", trip)
 
   if (!mongoose.Types.ObjectId.isValid(trip)) {
     res.status(400).json({ message: 'Specified id is not valid' });
@@ -230,7 +227,7 @@ const postComment = async (req, res, next) => {
   try {
     await Trip.findByIdAndUpdate(
       trip,
-      {$push: {'comments': { commentAuthor: { username: userCommenting.username, profilePicture: userCommenting.profilePicture}, comment: commentLeft}}},
+      {$push: {'comments': { commentAuthor: { _id: userCommenting._id, username: userCommenting.username, profilePicture: userCommenting.profilePicture}, comment: commentLeft}}},
       {safe: true, upsert: true, new : true}
     )
     res.status(200).json({ message: `Trip with ${trip} is updated successfully: new comment!` })
