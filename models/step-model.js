@@ -5,11 +5,12 @@ const stepSchema = new Schema(
   {
     title: {
       type: String,
-      required: [true, "Title is required."]
+      required: [true, "Title is required."],
     },
     trip: {
-      type: Schema.Types.ObjectId, ref: 'Trip'
-    }
+      type: Schema.Types.ObjectId,
+      ref: "Trip",
+    },
   },
   {
     timestamps: true,

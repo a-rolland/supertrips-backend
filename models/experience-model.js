@@ -5,49 +5,51 @@ const experienceSchema = new Schema(
   {
     title: {
       type: String,
-      required: [true, "Title is required."]
+      required: [true, "Title is required."],
     },
     step: {
-      type: Schema.Types.ObjectId, ref: 'Step'
+      type: Schema.Types.ObjectId,
+      ref: "Step",
     },
     trip: {
-      type: Schema.Types.ObjectId, ref: 'Trip'
+      type: Schema.Types.ObjectId,
+      ref: "Trip",
     },
     description: {
-      type: String
+      type: String,
     },
     place: {
       address: {
-        type: String
+        type: String,
       },
       lat: {
-        type: Number
+        type: Number,
       },
       lng: {
-        type: Number
-      }
+        type: Number,
+      },
     },
     date: {
       type: String,
-      required: [true, "Date is required."]
+      required: [true, "Date is required."],
     },
     time: {
       type: String,
-      required: [true, "Time is required"]
+      required: [true, "Time is required"],
     },
     showDate: {
       type: Boolean,
-      default: false
+      default: false,
     },
     showTime: {
       type: Boolean,
-      default: false
+      default: false,
     },
     pictures: [
       {
-        url: String
-      }
-    ]
+        url: String,
+      },
+    ],
   },
   {
     timestamps: true,

@@ -13,20 +13,21 @@ const userSchema = new Schema(
     },
     profilePicture: {
       type: String,
-      default: "https://res.cloudinary.com/nutriapp/image/upload/v1599217287/profileDefault_jr9j16.png"
+      default:
+        "https://res.cloudinary.com/nutriapp/image/upload/v1599217287/profileDefault_jr9j16.png",
     },
     favorites: {
       type: [Schema.Types.ObjectId],
-      ref: 'Trip'
+      ref: "Trip",
     },
     facebook: {
       id: String,
       email: String,
       name: {
         firstName: String,
-        lastName: String
-      }
-    }
+        lastName: String,
+      },
+    },
   },
   {
     timestamps: true,

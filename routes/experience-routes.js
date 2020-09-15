@@ -10,7 +10,7 @@ const {
   putEditExperience,
   deleteExperience,
   putNewPicture,
-  deleteExperiencePicture
+  deleteExperiencePicture,
 } = require("../controllers/experience-controller");
 
 router
@@ -21,6 +21,10 @@ router
   .put("/experiences/:id", putEditExperience)
   .delete("/experiences/:id", deleteExperience)
   .delete("/experiences/:id/deletePicture/:imageId", deleteExperiencePicture)
-  .put("/experiences/addPicture/:id", fileUploader.single("imageUrl"), putNewPicture)
+  .put(
+    "/experiences/addPicture/:id",
+    fileUploader.single("imageUrl"),
+    putNewPicture
+  );
 
 module.exports = router;

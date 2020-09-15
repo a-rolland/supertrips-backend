@@ -5,43 +5,45 @@ const tripSchema = new Schema(
   {
     title: {
       type: String,
-      required: [true, "Title is required."]
+      required: [true, "Title is required."],
     },
     author: {
-      type: Schema.Types.ObjectId, ref: 'User'
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
     isPublic: {
       type: Boolean,
-      default: false
+      default: false,
     },
     startDate: {
       type: String,
-      required: [true, "Start date is required."]
+      required: [true, "Start date is required."],
     },
     endDate: {
       type: String,
-      required: [true, "End date is required."]
+      required: [true, "End date is required."],
     },
     duration: {
-      type: Number
+      type: Number,
     },
-    imageUrl: { 
+    imageUrl: {
       type: String,
-      default: "https://res.cloudinary.com/nutriapp/image/upload/v1599217458/tripDefault_gkayed.jpg"
+      default:
+        "https://res.cloudinary.com/nutriapp/image/upload/v1599217458/tripDefault_gkayed.jpg",
     },
-    likes: { 
-      type: [Schema.Types.ObjectId]
+    likes: {
+      type: [Schema.Types.ObjectId],
     },
     comments: [
       {
         commentAuthor: {
           _id: Schema.Types.ObjectId,
           username: String,
-          profilePicture: String
+          profilePicture: String,
         },
-        comment: String
-      }
-    ]
+        comment: String,
+      },
+    ],
   },
   {
     timestamps: true,

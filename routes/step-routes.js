@@ -6,7 +6,7 @@ const {
   getSteps,
   getStepDetails,
   putEditStep,
-  deleteStep
+  deleteStep,
 } = require("../controllers/step-controller");
 
 router
@@ -14,6 +14,6 @@ router
   .get("/steps/:id", getSteps)
   .get("/stepDetails/:id", getStepDetails)
   .put("/steps/:id", putEditStep)
-  .delete("/steps/:id", deleteStep)
-  
+  .delete("/steps/:id", deleteStep);
+
 module.exports = router;

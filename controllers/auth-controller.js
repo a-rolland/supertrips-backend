@@ -1,18 +1,18 @@
 const express = require("express");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const User = require("../models/user-model");
 
 const getOneUser = async (req, res, next) => {
   try {
-    const foundUser = await User.findById(req.params.userId)
-    console.log(foundUser)
-    res.status(200).json(foundUser)
-  } catch(error) {
-    res.status(400).json(error)
+    const foundUser = await User.findById(req.params.userId);
+    console.log(foundUser);
+    res.status(200).json(foundUser);
+  } catch (error) {
+    res.status(400).json(error);
   }
-}
+};
 
 const postSignup = (req, res, next) => {
   const username = req.body.username;
@@ -24,12 +24,10 @@ const postSignup = (req, res, next) => {
   }
 
   if (password.length < 7) {
-    res
-      .status(400)
-      .json({
-        message:
-          "Please make your password at least 8 characters long for security purposes.",
-      });
+    res.status(400).json({
+      message:
+        "Please make your password at least 8 characters long for security purposes.",
+    });
     return;
   }
 
@@ -40,7 +38,9 @@ const postSignup = (req, res, next) => {
     }
 
     if (foundUser) {
-      res.status(400).json({ message: "Username taken. Please choose another one." });
+      res
+        .status(400)
+        .json({ message: "Username taken. Please choose another one." });
       return;
     }
 
@@ -106,20 +106,20 @@ const postLogin = (req, res, next) => {
 };
 
 const postFacebookLogin = async (req, res, next) => {
-  console.log("req.user:", req.user)
-  const fbUser = req.user
+  console.log("req.user:", req.user);
+  const fbUser = req.user;
   req.login(fbUser, (err) => {
     if (err) {
       res.status(500).json({ message: "Session save went bad." });
       return;
     }
   });
-  res.status(200).json(req.user)
-}
+  res.status(200).json(req.user);
+};
 
 const postGoogleLogin = async (req, res, next) => {
-  console.log("WENT HERE")
-  console.log("req.user:", req.user)
+  console.log("WENT HERE");
+  console.log("req.user:", req.user);
   // const googleUser = req.user
   // req.login(googleUser, (err) => {
   //   if (err) {
@@ -127,8 +127,8 @@ const postGoogleLogin = async (req, res, next) => {
   //     return;
   //   }
   // });
-  res.status(200).json(req.user)
-}
+  res.status(200).json(req.user);
+};
 
 const postLogout = (req, res, next) => {
   // req.logout() is defined by passport
@@ -146,56 +146,62 @@ const getLoggedIn = (req, res, next) => {
 };
 
 const putEditProfilePicture = async (req, res, next) => {
-  let profilePicture = req.body.profilePicture
+  let profilePicture = req.body.profilePicture;
   if (req.file) {
-    profilePicture = req.file.path
+    profilePicture = req.file.path;
   }
   if (!mongoose.Types.ObjectId.isValid(req.user.id)) {
-    res.status(400).json({ message: 'Specified id is not valid' });
+    res.status(400).json({ message: "Specified id is not valid" });
     return;
   }
   try {
-    await User.findByIdAndUpdate(req.user._id, { profilePicture: profilePicture })
-    res.json({ message: `User with ${req.user._id} is updated successfully.` })
-  } catch(error) {
-    res.json(error)
+    await User.findByIdAndUpdate(req.user._id, {
+      profilePicture: profilePicture,
+    });
+    res.json({ message: `User with ${req.user._id} is updated successfully.` });
+  } catch (error) {
+    res.json(error);
   }
-}
+};
 
 const toggleAddToFavorites = async (req, res, next) => {
-  const trip = req.params.id
-  console.log(trip)
+  const trip = req.params.id;
+  console.log(trip);
 
   if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
-    res.status(400).json({ message: 'Specified id is not valid' });
+    res.status(400).json({ message: "Specified id is not valid" });
     return;
   }
-  
-  const thisUser = await User.findById(req.user._id)
+
+  const thisUser = await User.findById(req.user._id);
   if (thisUser.favorites.indexOf(trip) === -1) {
     try {
       await User.findByIdAndUpdate(
         req.user._id,
-        {$push: {'favorites': trip}},
-        {safe: true, upsert: true, new : true}
-      )
-      res.json({ message: `User with ${req.user._id} is updated successfully: trip added to favorites!` })
-    } catch(error) {
-      res.json(error)
+        { $push: { favorites: trip } },
+        { safe: true, upsert: true, new: true }
+      );
+      res.json({
+        message: `User with ${req.user._id} is updated successfully: trip added to favorites!`,
+      });
+    } catch (error) {
+      res.json(error);
     }
   } else {
     try {
       await User.findByIdAndUpdate(
         req.user._id,
-        {$pull: {'favorites': trip}},
-        {safe: true, upsert: true, new : true}
-      )
-      res.json({ message: `User with ${req.user._id} is updated successfully: trip removed from favorites!` })
-    } catch(error) {
-      res.json(error)
+        { $pull: { favorites: trip } },
+        { safe: true, upsert: true, new: true }
+      );
+      res.json({
+        message: `User with ${req.user._id} is updated successfully: trip removed from favorites!`,
+      });
+    } catch (error) {
+      res.json(error);
     }
   }
-}
+};
 
 module.exports = {
   getOneUser,
@@ -206,5 +212,5 @@ module.exports = {
   putEditProfilePicture,
   toggleAddToFavorites,
   postFacebookLogin,
-  postGoogleLogin
+  postGoogleLogin,
 };

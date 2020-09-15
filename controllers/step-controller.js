@@ -21,7 +21,12 @@ const postNewStep = async (req, res, next) => {
     }
 
     if (foundStepTitle) {
-      res.status(400).json({ message: "This trip already has a step with this name. Please choose another one." });
+      res
+        .status(400)
+        .json({
+          message:
+            "This trip already has a step with this name. Please choose another one.",
+        });
       return;
     }
 
@@ -39,9 +44,9 @@ const postNewStep = async (req, res, next) => {
 };
 
 const getSteps = async (req, res, next) => {
-  const trip = req.params.id
+  const trip = req.params.id;
   try {
-    const steps = await Step.find({trip: req.params.id}).populate('trip');
+    const steps = await Step.find({ trip: req.params.id }).populate("trip");
     res.status(200).json(steps);
   } catch (error) {
     res.json(error);
@@ -71,26 +76,34 @@ const putEditStep = async (req, res, next) => {
     return;
   }
 
-  Step.findOne({ "title": req.body.title, "trip": req.body.trip, "_id": { $ne: req.params.id }}, async (err, foundStepTitle) => {
-    if (err) {
-      res.status(500).json({ message: "Title check went bad." });
-      return;
-    }
+  Step.findOne(
+    { title: req.body.title, trip: req.body.trip, _id: { $ne: req.params.id } },
+    async (err, foundStepTitle) => {
+      if (err) {
+        res.status(500).json({ message: "Title check went bad." });
+        return;
+      }
 
-    if (foundStepTitle) {
-      res.status(400).json({ message: "This trip already has a step with this name. Please choose another one." });
-      return;
-    }
+      if (foundStepTitle) {
+        res
+          .status(400)
+          .json({
+            message:
+              "This trip already has a step with this name. Please choose another one.",
+          });
+        return;
+      }
 
-    try {
-      await Step.findByIdAndUpdate(req.params.id, req.body);
-      res.json({
-        message: `Step with ${req.params.id} is updated successfully.`,
-      });
-    } catch (error) {
-      res.json(error);
+      try {
+        await Step.findByIdAndUpdate(req.params.id, req.body);
+        res.json({
+          message: `Step with ${req.params.id} is updated successfully.`,
+        });
+      } catch (error) {
+        res.json(error);
+      }
     }
-  });
+  );
 
   // try {
   //   await Step.findByIdAndUpdate(req.params.id, req.body);
@@ -110,11 +123,13 @@ const deleteStep = async (req, res, next) => {
   try {
     await Step.findByIdAndRemove(req.params.id);
     try {
-      await Experience.deleteMany({step: req.params.id})
-      res.json({ message: `Step with ${req.params.id} is removed successfully.
-      Experience(s) from Step ${req.params.id} were removed successfully.` })
-    } catch(error) {
-      res.json(error)
+      await Experience.deleteMany({ step: req.params.id });
+      res.json({
+        message: `Step with ${req.params.id} is removed successfully.
+      Experience(s) from Step ${req.params.id} were removed successfully.`,
+      });
+    } catch (error) {
+      res.json(error);
     }
   } catch (error) {
     res.json(error);

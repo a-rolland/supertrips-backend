@@ -1,6 +1,6 @@
 const User = require("../models/user-model");
 const LocalStrategy = require("passport-local").Strategy;
-const FacebookTokenStrategy = require('passport-facebook-token');
+const FacebookTokenStrategy = require("passport-facebook-token");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 
@@ -41,18 +41,22 @@ passport.use(
   })
 );
 
-passport.use('facebookToken', new FacebookTokenStrategy({
+passport.use(
+  "facebookToken",
+  new FacebookTokenStrategy(
+    {
       clientID: process.env.FACEBOOK_APP_ID,
-      clientSecret: process.env.FACEBOOK_APP_SECRET
-    }, async (accessToken, refreshToken, profile, done) => {
+      clientSecret: process.env.FACEBOOK_APP_SECRET,
+    },
+    async (accessToken, refreshToken, profile, done) => {
       try {
-        console.log("FB Profile :", profile)
-        console.log("accessToken :", accessToken)
-        console.log("refreshToken :", refreshToken)
+        console.log("FB Profile :", profile);
+        console.log("accessToken :", accessToken);
+        console.log("refreshToken :", refreshToken);
 
-        const existingUser = await User.findOne({"facebook.id": profile.id});
+        const existingUser = await User.findOne({ "facebook.id": profile.id });
         if (existingUser) {
-          return done(null, existingUser)
+          return done(null, existingUser);
         }
 
         const newUser = new User({
@@ -63,15 +67,16 @@ passport.use('facebookToken', new FacebookTokenStrategy({
             email: profile.emails[0].value,
             name: {
               firstName: profile.name.givenName,
-              lastName: profile.name.familyName
-            }
-          }
-        })
+              lastName: profile.name.familyName,
+            },
+          },
+        });
 
         await newUser.save();
         done(null, newUser);
-      } catch(error) {
-        done(error, false, error.message)
+      } catch (error) {
+        done(error, false, error.message);
       }
-    })
-)
+    }
+  )
+);

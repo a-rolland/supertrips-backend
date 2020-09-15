@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const fileUploader = require("../configs/cloudinary");
-const passport = require("passport")
+const passport = require("passport");
 
 const {
   getOneUser,
@@ -11,7 +11,7 @@ const {
   getLoggedIn,
   putEditProfilePicture,
   toggleAddToFavorites,
-  postFacebookLogin
+  postFacebookLogin,
 } = require("../controllers/auth-controller");
 
 router
@@ -20,8 +20,16 @@ router
   .post("/login", postLogin)
   .post("/logout", postLogout)
   .get("/loggedIn", getLoggedIn)
-  .put("/profile/profilePicture", fileUploader.single("profilePicture"), putEditProfilePicture)
+  .put(
+    "/profile/profilePicture",
+    fileUploader.single("profilePicture"),
+    putEditProfilePicture
+  )
   .put("/toggleAddToFavorites/:id", toggleAddToFavorites)
-  .post("/auth/facebook", passport.authenticate('facebookToken', { session: false }), postFacebookLogin)
+  .post(
+    "/auth/facebook",
+    passport.authenticate("facebookToken", { session: false }),
+    postFacebookLogin
+  );
 
 module.exports = router;

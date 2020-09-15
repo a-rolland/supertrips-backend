@@ -1,16 +1,16 @@
 require("dotenv").config();
 
-const bodyParser    = require("body-parser");
-const cookieParser  = require("cookie-parser");
-const express       = require("express");
-const favicon       = require("serve-favicon");
-const hbs           = require("hbs");
-const mongoose      = require("mongoose");
-const logger        = require("morgan");
-const path          = require("path");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const express = require("express");
+const favicon = require("serve-favicon");
+const hbs = require("hbs");
+const mongoose = require("mongoose");
+const logger = require("morgan");
+const path = require("path");
 // const session       = require("express-session"); // First version
-const passport      = require("passport");
-const cors          = require("cors");
+const passport = require("passport");
+const cors = require("cors");
 
 require("./configs/passport");
 require("./configs/cloudinary");
@@ -28,7 +28,7 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, "build")));
 
 // Express View engine setup
 
@@ -54,8 +54,8 @@ app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 //     cookie: { maxAge: 1000 * 60 * 60 * 24 }, // User stays in session 24 hours before automatic logout
 //   })
 // );
-const session = require('./configs/session')
-session(app)
+const session = require("./configs/session");
+session(app);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -66,7 +66,7 @@ app.locals.title = "Supertrips";
 app.use(
   cors({
     credentials: true,
-    origin: true
+    origin: true,
   })
 );
 
