@@ -46,11 +46,11 @@ List of other features outside of the MVPs scope
 - As a user, I want to be able to "Like" a trip.
 - As a user, I want to add pictures to my trip.
 
-## ROUTES - BACKEND:
+## Routes - Back-end :
 
 | Method | URL                                         | Description                                                                                                                          |
 | ------ | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| ------ | ----- USER -----                            | ------------------------------------------------------------------------------------------------------------                         |
+|        | USER                                        |                                                                                                                                      |
 | GET    | /api/getUser/:userId                        | takes an id and sends back a json with user infos                                                                                    |
 | POST   | /api/signup                                 | takes object with credentials, creates a user and sends back a json with new user infos                                              |
 | POST   | /api/login                                  | takes object with credentials, logs a user in and sends back a json with user infos                                                  |
@@ -59,7 +59,7 @@ List of other features outside of the MVPs scope
 | POST   | /api/logout                                 | logs any logged in user out                                                                                                          |
 | PUT    | /api/profile/profilePicture                 | takes an id and an object of filled inputs, updates the user in DB and sends back a json with updated user                           |
 | PUT    | /api/toggleAddToFavorites/id                | takes a trip id and adds it to the favorites array of the logged in user in DB, or remove it if it is already there                  |
-| ------ | ----- TRIPS -----                           | ----- TRIPS -----                                                                                                                    |
+|        | TRIPS                                       |                                                                                                                                      |
 | POST   | /api/newTrip                                | takes an object of filled inputs, creates a new trip in DB and sends back a json with the new trip                                   |
 | GET    | /api/trips                                  | sends back a json with a all the trips                                                                                               |
 | GET    | /api/popularTrips                           | sends back a json with the 5 top rated trips, ordered by number of 'likes'                                                           |
@@ -68,13 +68,13 @@ List of other features outside of the MVPs scope
 | DELETE | /api/trips/:id                              | takes a trip id and delete the found trip in DB                                                                                      |
 | PUT    | /api/trip/toggleLikes/:id                   | takes a trip id and add/remove the id of the loggedIn user from the trip's likes array in DB                                         |
 | POST   | /api/trip/postComment/:id                   | takes a trip id and an object of filled inputs and adds a comment to the trip's comments array                                       |
-| ------ | ----- STEPS -----                           | ----- STEPS -----                                                                                                                    |
+|        | STEPS                                       |                                                                                                                                      |
 | POST   | /api/newStep                                | takes an object with filled inputs, creates a new step in DB and sends back the new step                                             |
 | GET    | /api/steps/:id                              | takes a trip id and sends back a json with the all the steps from a trip                                                             |
 | GET    | /api/stepDetails/:id                        | takes a step id and sends back a json with a specific step                                                                           |
 | PUT    | /api/steps/:id                              | takes a step id and an object with filled inputs, update the step in DB sends back a json with the edited step                       |
 | DELETE | /api/steps/:id                              | takes a step id and delete the found step in DB                                                                                      |
-| ------ | ----- EXPERIENCES -----                     | ----- EXPERIENCES -----                                                                                                              |
+|        | EXPERIENCES                                 |                                                                                                                                      |
 | POST   | /api/newExperience                          | takes an object with filled inputs, creates a new experience in DB and sends back a json with the new experience                     |
 | GET    | /api/experiences/:stepId                    | takes a step id and sends back a json with all the experiences from this step                                                        |
 | GET    | /api/experiences/trip/:id                   | takes a trip id and sends back a json with all the experiences from this trip                                                        |
@@ -167,9 +167,9 @@ Sessions model (automatically created)
 [Frontend](https://github.com/a-rolland/supertrips-frontend)
 [Backend](https://github.com/a-rolland/supertrips-backend)
 
-### Deploy
+### Deploy on Heroku
 
-[Heroku App](https://supertrips.herokuapp.com/)
+[Supertrips](https://supertrips.herokuapp.com/)
 
 ### Slides
 
