@@ -117,19 +117,6 @@ const postFacebookLogin = async (req, res, next) => {
   res.status(200).json(req.user);
 };
 
-const postGoogleLogin = async (req, res, next) => {
-  console.log("WENT HERE");
-  console.log("req.user:", req.user);
-  // const googleUser = req.user
-  // req.login(googleUser, (err) => {
-  //   if (err) {
-  //     res.status(500).json({ message: "Session save went bad." });
-  //     return;
-  //   }
-  // });
-  res.status(200).json(req.user);
-};
-
 const postLogout = (req, res, next) => {
   // req.logout() is defined by passport
   req.logout();
@@ -212,5 +199,4 @@ module.exports = {
   putEditProfilePicture,
   toggleAddToFavorites,
   postFacebookLogin,
-  postGoogleLogin,
 };
