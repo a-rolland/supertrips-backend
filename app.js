@@ -43,7 +43,7 @@ app.set("view engine", "hbs");
 // app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "build")));
 // app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
-app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, "build", "favicon.ico")));
 
 const session = require("./configs/session");
 session(app);
@@ -74,7 +74,8 @@ app.use("/api", experienceRoutes);
 
 app.use((req, res, next) => {
   // If no routes match, send them the React HTML.
-  res.sendFile(__dirname + "/public/index.html");
+  // res.sendFile(__dirname + "/public/index.html");
+  res.sendFile(__dirname + "/build/index.html");
 });
 
 module.exports = app;
