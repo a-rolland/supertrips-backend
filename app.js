@@ -8,7 +8,6 @@ const hbs = require("hbs");
 const mongoose = require("mongoose");
 const logger = require("morgan");
 const path = require("path");
-// const session       = require("express-session"); // First version
 const passport = require("passport");
 const cors = require("cors");
 
@@ -31,7 +30,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "build")));
 
 // Express View engine setup
-
 app.use(
   require("node-sass-middleware")({
     src: path.join(__dirname, "public"),
@@ -47,22 +45,13 @@ app.use(express.static(path.join(__dirname, "build")));
 // app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
 
-// Session configs - first version
-// app.use(
-//   session({
-//     secret: "supertrips supersecret superkey",
-//     resave: true,
-//     saveUninitialized: true,
-//     cookie: { maxAge: 1000 * 60 * 60 * 24 }, // User stays in session 24 hours before automatic logout
-//   })
-// );
 const session = require("./configs/session");
 session(app);
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-// default value for title local
+// Default value for title local
 app.locals.title = "Supertrips";
 
 app.use(
