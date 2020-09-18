@@ -7,7 +7,7 @@ const User = require("../models/user-model");
 const getOneUser = async (req, res, next) => {
   try {
     const foundUser = await User.findById(req.params.userId);
-    console.log(foundUser);
+    // console.log(foundUser);
     res.status(200).json(foundUser);
   } catch (error) {
     res.status(400).json(error);
@@ -70,7 +70,8 @@ const postSignup = (req, res, next) => {
 
         // Send the user's information to the frontend
         // We can use also: res.status(200).json(req.user);
-        res.status(200).json(aNewUser);
+        const { password, ...aNewUserFiltered } = aNewUser._doc;
+        res.status(200).json(aNewUserFiltered);
       });
     });
   });
@@ -100,13 +101,15 @@ const postLogin = (req, res, next) => {
       }
 
       // We are now logged in (that's why we can also send req.user)
-      res.status(200).json(theUser);
+      const { password, ...theUserFiltered } = theUser._doc;
+      // console.log(theUserFiltered);
+      res.status(200).json(theUserFiltered);
     });
   })(req, res, next);
 };
 
 const postFacebookLogin = async (req, res, next) => {
-  console.log("req.user:", req.user);
+  // console.log("req.user:", req.user);
   const fbUser = req.user;
   req.login(fbUser, (err) => {
     if (err) {
@@ -114,7 +117,9 @@ const postFacebookLogin = async (req, res, next) => {
       return;
     }
   });
-  res.status(200).json(req.user);
+  const { ...theFBUserFiltered } = req.user._doc;
+  console.log("FILTERED", theFBUserFiltered);
+  res.status(200).json(theFBUserFiltered);
 };
 
 const postLogout = (req, res, next) => {
@@ -153,7 +158,7 @@ const putEditProfilePicture = async (req, res, next) => {
 
 const toggleAddToFavorites = async (req, res, next) => {
   const trip = req.params.id;
-  console.log(trip);
+  // console.log(trip);
 
   if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
     res.status(400).json({ message: "Specified id is not valid" });
